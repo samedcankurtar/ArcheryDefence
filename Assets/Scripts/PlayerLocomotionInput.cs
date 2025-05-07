@@ -4,12 +4,14 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-2)] //Change execution order(run this earlier and get inputs first)
 public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomotionActions
 {
+  [SerializeField] private bool holdToSprint = true;
   //init PlayerControls 
   public PlayerControls PlayerControls { get; private set; } //prop, can access, can't set from outside
+  public bool SprintToggledOn { get; private set; }
 
   //Movement inputs
-  public Vector2 MovementInput { get; private set; } //WASD
-  public Vector2 LookInput { get; private set; } //Mouse input
+  public Vector2 MovementInput;// { get; private set; } //WASD
+  public Vector2 LookInput; // { get; private set; } //Mouse input
 
   private void OnEnable()
   {
@@ -30,14 +32,31 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
     PlayerControls.PlayerLocomotion.RemoveCallbacks(this);
   }
 
-
+  //WASD inputs
   public void OnMovement(InputAction.CallbackContext context)
   {
     MovementInput = context.ReadValue<Vector2>();
   }
 
+  //Mouse X-Y axis input
   public void OnLook(InputAction.CallbackContext context)
   {
     LookInput = context.ReadValue<Vector2>();
+  }
+
+  //Left shift input
+  public void OnToggleSprint(InputAction.CallbackContext context)
+  {
+    //Left shift pressed
+    if (context.performed)
+    {
+      //if holdToSprint true or SprintToggledOn false
+      SprintToggledOn = holdToSprint || !SprintToggledOn;
+    }
+    //Left shift released
+    else if (context.canceled)
+    {
+      SprintToggledOn = !holdToSprint && SprintToggledOn;
+    }
   }
 }

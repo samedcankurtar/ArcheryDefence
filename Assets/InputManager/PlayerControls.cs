@@ -108,20 +108,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleSprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb3337ea-1183-4679-b625-1705e409149a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""7c5f2172-038d-4cb6-a1e4-0bcad871ecf0"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""WASD"",
                     ""id"": ""0134a4a7-8df3-4bdf-90c4-8e8d6c862265"",
@@ -187,6 +185,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0cd8f805-1a14-4b94-9708-47eaaa25df77"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleSprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -197,6 +206,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerLocomotion = asset.FindActionMap("PlayerLocomotion", throwIfNotFound: true);
         m_PlayerLocomotion_Movement = m_PlayerLocomotion.FindAction("Movement", throwIfNotFound: true);
         m_PlayerLocomotion_Look = m_PlayerLocomotion.FindAction("Look", throwIfNotFound: true);
+        m_PlayerLocomotion_ToggleSprint = m_PlayerLocomotion.FindAction("ToggleSprint", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -279,6 +289,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayerLocomotionActions> m_PlayerLocomotionActionsCallbackInterfaces = new List<IPlayerLocomotionActions>();
     private readonly InputAction m_PlayerLocomotion_Movement;
     private readonly InputAction m_PlayerLocomotion_Look;
+    private readonly InputAction m_PlayerLocomotion_ToggleSprint;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerLocomotion".
     /// </summary>
@@ -298,6 +309,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerLocomotion/Look".
         /// </summary>
         public InputAction @Look => m_Wrapper.m_PlayerLocomotion_Look;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerLocomotion/ToggleSprint".
+        /// </summary>
+        public InputAction @ToggleSprint => m_Wrapper.m_PlayerLocomotion_ToggleSprint;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -330,6 +345,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @ToggleSprint.started += instance.OnToggleSprint;
+            @ToggleSprint.performed += instance.OnToggleSprint;
+            @ToggleSprint.canceled += instance.OnToggleSprint;
         }
 
         /// <summary>
@@ -347,6 +365,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @ToggleSprint.started -= instance.OnToggleSprint;
+            @ToggleSprint.performed -= instance.OnToggleSprint;
+            @ToggleSprint.canceled -= instance.OnToggleSprint;
         }
 
         /// <summary>
@@ -401,5 +422,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleSprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleSprint(InputAction.CallbackContext context);
     }
 }
