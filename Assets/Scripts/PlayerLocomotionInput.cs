@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [DefaultExecutionOrder(-2)] //Change execution order(run this earlier and get inputs first)
 public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomotionActions
 {
+  #region Class Variables
+
   [SerializeField] private bool holdToSprint = true;
   //init PlayerControls 
   public PlayerControls PlayerControls { get; private set; } //prop, can access, can't set from outside
@@ -12,7 +14,11 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
   //Movement inputs
   public Vector2 MovementInput;// { get; private set; } //WASD
   public Vector2 LookInput; // { get; private set; } //Mouse input
+  public bool JumpPressed { get; private set; }
+  public bool WalkToggledOn { get; private set; }
+  #endregion
 
+  #region  Startup
   private void OnEnable()
   {
     //Enable PlayerControls
@@ -32,6 +38,16 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
     PlayerControls.PlayerLocomotion.RemoveCallbacks(this);
   }
 
+  #endregion
+
+  #region  Late Update Logic
+  private void LateUpdate()
+  {
+    JumpPressed = false;
+  }
+  #endregion
+
+  #region Input Callbacks
   //WASD inputs
   public void OnMovement(InputAction.CallbackContext context)
   {
@@ -59,4 +75,22 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
       SprintToggledOn = !holdToSprint && SprintToggledOn;
     }
   }
+
+  //On jump  
+  public void OnJump(InputAction.CallbackContext context)
+  {
+    if (!context.performed)
+      return;
+
+    JumpPressed = true;
+
+  }
+
+  public void OnToggleWalk(InputAction.CallbackContext context)
+  {
+    if (!context.performed) return;
+
+    WalkToggledOn = !WalkToggledOn;
+  }
+  #endregion
 }

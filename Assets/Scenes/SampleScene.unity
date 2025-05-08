@@ -1924,7 +1924,7 @@ GameObject:
   - component: {fileID: 1279437347321337367}
   - component: {fileID: 1279437347320337623}
   - component: {fileID: 8484069591291053984}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3244,7 +3244,7 @@ Transform:
   m_GameObject: {fileID: 3100912323445507424}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.674, y: 3.48, z: 0}
+  m_LocalPosition: {x: -11.93, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4531,9 +4531,9 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.9
   m_Radius: 0.35
-  m_SlopeLimit: 45
+  m_SlopeLimit: 60
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.00001
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!4 &4746512834027385305
@@ -6960,12 +6960,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterController: {fileID: 4740486801553382430}
   _playerCamera: {fileID: 4922397006852986558}
+  walkAcceleration: 0.15
+  walkSpeed: 2
   runAcceleration: 35
   runSpeed: 4
   drag: 15
   sprintAcceleration: 50
   sprintSpeed: 7
+  gravity: 25
+  jumpSpeed: 1
   movingThreshold: 0.01
+  playerModelRotationSpeed: 10
+  rotateToTargetTime: 0.67
   lookSenseH: 0.1
   lookSenseV: 0.1
   lookLimitV: 89
